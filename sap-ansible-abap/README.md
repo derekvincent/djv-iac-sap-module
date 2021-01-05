@@ -33,16 +33,16 @@ No provider.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| block\_devices | A list of block devices that will be as a simple block device.<br>Example Format:<br>[<br>  {<br>    name : "Software",<br>    device : "/dev/sdg",<br>    size : "100%FREE",<br>    mount : "/sybase/DAC/archive\_logs",<br>    fstype : "xfs"<br>  },<br>] | <pre>list(<br>    object({<br>      name   = string<br>      device = string<br>      size   = string<br>      mount  = string<br>      fstype = string<br>    })<br>  )</pre> | `null` | no |
+| block\_devices | A list of block devices that will be as a simple block device.<br>Example Format:<pre>[<br>  {<br>    name : "Software",<br>    device : "/dev/sdg",<br>    size : "100%FREE",<br>    mount : "/sybase/DAC/archive_logs",<br>    fstype : "xfs"<br>  },<br>]</pre> | <pre>list(<br>    object({<br>      name   = string<br>      device = string<br>      size   = string<br>      mount  = string<br>      fstype = string<br>    })<br>  )</pre> | `null` | no |
 | domainname | The domain name of the SAP system. | `string` | n/a | yes |
 | hostname | The short hostname of the SAP system. | `string` | n/a | yes |
 | ip\_address | The IP addrress of the SAP system. | `string` | n/a | yes |
 | json\_format | Output the file in a json format instead of YAML. | `bool` | `false` | no |
 | reboot\_after\_patch | Reboot the system after the patching is done. | `bool` | `false` | no |
-| saptrans\_efs | SAP Transport EFS details. | <pre>map(<br>    object({<br>      filesystem_id   = string<br>      filesystem_host = string<br>      filesystem_ip   = string<br>      tls : bool<br>      iam : bool<br>      access_point = string<br>    })<br>  )</pre> | `null` | no |
-| sid | SID of the SAP system. | `string` | `""` | no |
+| saptrans\_efs | SAP Transport EFS details.<br>Example Format:<pre>{ <br>  "use2-az1" : {<br>    filesystem_id : "fs-3df46f45"<br>    filesystem_host : "fs-3df46f45.efs.us-east-2.amazonaws.com"<br>    filesystem_ip : "10.100.12.25"<br>    tls : true<br>    iam : true<br>    access_point : "fsap-01230fe8d391ac5b6"<br>  } <br>}</pre> | <pre>map(<br>    object({<br>      filesystem_id   = string<br>      filesystem_host = string<br>      filesystem_ip   = string<br>      tls : bool<br>      iam : bool<br>      access_point = string<br>    })<br>  )</pre> | `null` | no |
+| sid | SAP System ID. | `string` | `""` | no |
 | swap\_device | The EBS device to use for defined for swap (ie. /dev/sbw). | `string` | n/a | yes |
-| volume\_groups | Volume groups, logical volumes, files system types, sizes and mount points. | <pre>list(<br>    object({<br>      name    = string<br>      devices = list(string)<br>      logical_volumes = list(<br>        object({<br>          name   = string<br>          size   = string<br>          mount  = string<br>          fstype = string<br>        })<br>      )<br>    })<br>  )</pre> | n/a | yes |
+| volume\_groups | Volume groups, logical volumes, files system types, sizes and mount points.<br>Example Format:<pre>[<br>  {<br>    name : "sap",<br>    devices : ["/dev/sdf"],<br>    logical_volumes : [<br>      { name : "usr_sap", size : "50G", mount : "/usr/sap", fstype : "xfs" },<br>      { name : "sapmnt", size : "100%FREE", mount : "/sapmnt", fstype : "xfs" }<br>    ]<br>  },  <br>]</pre> | <pre>list(<br>    object({<br>      name    = string<br>      devices = list(string)<br>      logical_volumes = list(<br>        object({<br>          name   = string<br>          size   = string<br>          mount  = string<br>          fstype = string<br>        })<br>      )<br>    })<br>  )</pre> | n/a | yes |
 
 ## Outputs
 

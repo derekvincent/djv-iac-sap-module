@@ -19,7 +19,7 @@ variable "ip_address" {
 }
 
 variable "sid" {
-  description = "SID of the SAP system."
+  description = "SAP System ID."
   type        = string
   default     = ""
 }
@@ -36,7 +36,22 @@ variable "swap_device" {
 }
 
 variable "volume_groups" {
-  description = "Volume groups, logical volumes, files system types, sizes and mount points."
+  description = <<-HEREDOC
+  Volume groups, logical volumes, files system types, sizes and mount points.
+  Example Format:
+  ```
+  [
+    {
+      name : "sap",
+      devices : ["/dev/sdf"],
+      logical_volumes : [
+        { name : "usr_sap", size : "50G", mount : "/usr/sap", fstype : "xfs" },
+        { name : "sapmnt", size : "100%FREE", mount : "/sapmnt", fstype : "xfs" }
+      ]
+    },  
+  ]
+  ```
+  HEREDOC
   type = list(
     object({
       name    = string
@@ -56,7 +71,8 @@ variable "volume_groups" {
 variable "block_devices" {
   description = <<-HEREDOC
     A list of block devices that will be as a simple block device.
-    Example Format:  
+    Example Format: 
+    ``` 
     [
       {
         name : "Software",
@@ -66,6 +82,7 @@ variable "block_devices" {
         fstype : "xfs"
       },
     ]
+    ```
   HEREDOC
 
   type = list(
@@ -81,7 +98,23 @@ variable "block_devices" {
 }
 
 variable "saptrans_efs" {
-  description = "SAP Transport EFS details."
+  description = <<-HEREDOC
+  SAP Transport EFS details.
+  Example Format: 
+  ```
+  { 
+    "use2-az1" : {
+      filesystem_id : "fs-3df46f45"
+      filesystem_host : "fs-3df46f45.efs.us-east-2.amazonaws.com"
+      filesystem_ip : "10.100.12.25"
+      tls : true
+      iam : true
+      access_point : "fsap-01230fe8d391ac5b6"
+    } 
+  }
+  ```
+  HEREDOC
+
   type = map(
     object({
       filesystem_id   = string
