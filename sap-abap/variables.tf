@@ -1,25 +1,25 @@
 variable "namespace" {
-  description = "Namespace - 'clk' or 'clklab' "
+  description = "Namespace - used in tagging and name generation."
   type        = string
   default     = ""
 }
 
+
 variable "environment" {
-  description = "Environment - eg. 'sbx', 'dev','qa','prod'"
+  description = "Environment - used in tagging and name generation."
   type        = string
   default     = ""
 }
 
 variable "name" {
-  description = "Name"
+  description = "Name or application - used in tagging and name generation"
   type        = string
 }
 
 variable "customer" {
-  description = "Customer Name - billing tag"
+  description = "Customer (internal/external) Name - billing tag"
   type        = string
 }
-
 variable "region" {
   description = "AWS region"
   default     = "us-east-1"
@@ -35,7 +35,7 @@ variable "fqdn" {
   default     = ""
 }
 variable "sap_type" {
-  description = "Type of SAP instance - ABAP, J2EE, HANA, WD"
+  description = "Type of SAP instance - ABAP, J2EE, HANA, WD."
   type        = string
   default     = "ABAP"
 }
@@ -46,28 +46,45 @@ variable "sap_application" {
 }
 
 variable "sap_application_version" {
-  description = "SAP Application version"
+  description = "The main SAP Application version - used in tagging."
   type        = string
 }
 
 variable "sap_netweaver_version" {
-  description = "Technical version of the underlying Netweaver stack."
+  description = "Technical version of the underlying Netweaver stack - used in tagging."
   type        = string
 }
 
 variable "sap_instance_type" {
   description = "Type of SAP instance modes deployed on the host - ASCS, DIALOG"
+  type        = string
 }
 ##
 ##
 ##
 variable "vpc_id" {
-  description = "VPC Id"
+  description = "The VPC ID where the system and related components will be created."
   type        = string
 }
 
 variable "security_group_egress_rules" {
-  description = "List of Map rules - Default: Allow everything"
+  description = <<-HEREDOC
+  Security group egress rules, default to allow everything.  
+  Example Format: 
+  ```
+    [
+      { 
+          from_port : 0, 
+          to_port : 0,
+          protocol : "-1", 
+          cidr_blocks : ["10.100.0.0/16", "192.168.111.0/24", "192.168.99.0/24"],
+          prefix_ids : [], 
+          security_group : "",
+          description : "Ping from AWS and VPN subnets."
+      },
+    ]
+  ```
+  HEREDOC
   type        = list(any)
   default = [
     {
@@ -82,7 +99,23 @@ variable "security_group_egress_rules" {
 }
 
 variable "security_group_ingress_rules" {
-  description = "List of Map rules - Default: Allow ICMP and SSH"
+  description = <<-HEREDOC
+  Security group ingress rules, default to allow ICMP and SSH from everywhere.  
+  Example Format: 
+  ```
+    [
+      { 
+          from_port : 0, 
+          to_port : 0,
+          protocol : "-1", 
+          cidr_blocks : ["10.100.0.0/16", "192.168.111.0/24", "192.168.99.0/24"],
+          prefix_ids : [], 
+          security_group : "",
+          description : "Ping from AWS and VPN subnets."
+      },
+    ]
+  ```
+  HEREDOC
   type        = list(any)
   default = [
     {
@@ -110,12 +143,12 @@ variable "hostname" {
 
 # SAP 
 variable "sap_sid" {
-  description = "SAP 3 letter Sysem ID [SID]"
+  description = "SAP System ID."
   type        = string
 }
 
 variable "sap_sysnr" {
-  description = "SAP System Number"
+  description = "SAP System Number."
   type        = string
 }
 
@@ -134,65 +167,65 @@ variable "ec2_instance_type" {
 }
 
 variable "key_name" {
-  description = "EC2 instance keypair to use."
+  description = "An existing EC2 instance keypair to use."
   type        = string
 }
 
 variable "subnet_id" {
-  description = "VPC Subnet ID to deploy the instnace in."
+  description = "VPC Subnet ID to deploy the instance into."
   type        = string
 }
 
 variable "enable_enhanced_monitoring" {
-  description = "Enable Enhanced Cloudwatch Monitoring; default: true."
+  description = "Enable Enhanced Cloudwatch Monitoring."
   type        = bool
   default     = true
 }
 
 variable "enable_public_address" {
-  description = "Enable assignment of a public address when in a public subnet; default: false."
+  description = "Enable assignment of a public address when in a public subnet."
   type        = bool
   default     = false
 }
 
 variable "ec2_private_ip" {
-  description = "Sets the instances IP address. If not set then a random subnet IP address will be used."
+  description = "Sets the instances IP address. If not set then an IP from thee subnet ranging will be assigned."
   type        = string
   default     = null
 }
 
 variable "ebs_optimized" {
-  description = "Enable the EBS optimization on the instance if support; default: false"
+  description = "Enable the EBS optimization on the instance if support."
   type        = bool
   default     = false
 }
 
 variable "termination_protection" {
-  description = "Instance termination protection default:true."
+  description = "Instance termination protection. IMPORTANT: This currently does not protect assigned EBS disk from `terraform destroy`."
   type        = bool
   default     = true
 }
 
 variable "root_volume_type" {
-  description = "Root Volume type - standard, gp2, io1 or io2; default: gp2)."
+  description = "Root Volume type - standard, gp2, io1 or io2."
   type        = string
   default     = "gp2"
 }
 
 variable "root_volume_size" {
-  description = "Root Volume size; default: 20."
+  description = "Root Volume size."
   type        = string
   default     = "20"
 }
 
 variable "root_volume_encrypted" {
-  description = "Enable Root Volume Encryption; default: true."
+  description = "Enable Root Volume Encryption."
   type        = bool
   default     = true
 }
 
 variable "swap_volume_type" {
-  description = "Swap Volume type - standard, gp2, io1 or io2; default: standard)."
+  description = "Swap Volume type - standard, gp2, io1 or io2."
   type        = string
   default     = "standard"
 }
@@ -203,18 +236,28 @@ variable "swap_volume_size" {
 }
 
 variable "swap_volume_encrypted" {
-  description = "Enable Swap Volume Encryption; default: true."
+  description = "Enable Swap Volume Encryption."
   type        = bool
   default     = true
 }
 
 variable "ebs_disk_layouts" {
-  description = "Map of the additional ebs values to be added."
+  description = <<-HEREDOC
+  Map of the additional ebs values to be added.
+  ```
+  { 
+    "sdf" : {"type": "gp2", "size": 120, "encrypted": true, "description": "sap volume"},
+    "sdh" : {"type": "gp2", "size": 200, "encrypted": true, "description": "db volume"},
+    "sdm" : {"type": "gp2", "size": 150, "encrypted": true, "description": "backup"},
+    "sdo" : {"type": "gp2", "size": 300, "encrypted": true, "description": "sltools"},   
+  }
+  ```                   
+  HEREDOC
   type        = map(any)
 }
 
 variable "efs_access_point" {
-  description = "Access Point Map"
+  description = "Map of the EFS access points avaliable. Keyed on system type identifier."
   type        = map(any)
   default     = {}
 

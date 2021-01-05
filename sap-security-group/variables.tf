@@ -1,22 +1,23 @@
 variable "namespace" {
-  description = "Namespace - 'clk' or 'clklab' "
+  description = "Namespace - used in tagging and name generation."
   type        = string
   default     = ""
 }
 
+
 variable "environment" {
-  description = "Environment - eg. 'sbx', 'dev','qa','prod'"
+  description = "Environment - used in tagging and name generation."
   type        = string
   default     = ""
 }
 
 variable "name" {
-  description = "Name"
+  description = "Name or application - used in tagging and name generation"
   type        = string
 }
 
 variable "customer" {
-  description = "Customer Name - billing tag"
+  description = "Customer (internal/external) Name - billing tag"
   type        = string
 }
 
@@ -26,40 +27,72 @@ variable "region" {
 }
 
 variable "additional_ingress_rules" {
-  description = "List of Map ingress rules "
+  description = <<-HEREDOC
+  Additional ingress rules to add. 
+  Example Format: 
+  ```
+    [
+      { 
+          from_port : 0, 
+          to_port : 0,
+          protocol : "-1", 
+          cidr_blocks : ["10.100.0.0/16", "192.168.111.0/24", "192.168.99.0/24"],
+          prefix_ids : [], 
+          security_group : "",
+          description : "Ping from AWS and VPN subnets."
+      },
+    ]
+  ```
+  HEREDOC
   type        = list(any)
   default     = []
 }
 
 variable "additional_egress_rules" {
-  description = "List of Map egress rules "
+  description = <<-HEREDOC
+  Additional egress rules to add. 
+  Example Format: 
+  ```
+    [
+      { 
+          from_port : 0, 
+          to_port : 0,
+          protocol : "-1", 
+          cidr_blocks : ["10.100.0.0/16", "192.168.111.0/24", "192.168.99.0/24"],
+          prefix_ids : [], 
+          security_group : "",
+          description : "Ping from AWS and VPN subnets."
+      },
+    ]
+  ```
+  HEREDOC
   type        = list(any)
   default     = []
 }
 variable "vpc_id" {
-  description = "VPC to add the security group to."
+  description = "The ID of the VPC the security group will be created in."
   type        = string
 }
 
 variable "sysnr" {
-  description = "SAP System Number"
+  description = "SAP System Number."
   type        = string
 }
 
 variable "sap_base_cidr" {
-  description = "List of CIDR's to allow to common user accessed ports"
+  description = "List of CIDR's to allow to common user accessed ports."
   type        = list(any)
   default     = []
 }
 
 variable "sap_base_prefix" {
-  description = "List of Prefix List to allow to common user accessed ports"
+  description = "List of prefix list id's to allow to common user accessed ports"
   type        = list(any)
   default     = []
 }
 
 variable "enable_sap_standard_http" {
-  description = "Enable standard SAP http/s ports (80xx, and 443xx); default: true."
+  description = "Enable standard SAP http/s ports (80xx, and 443xx)."
   type        = bool
   default     = true
 }
@@ -77,14 +110,14 @@ variable "sap_control_prefix" {
 }
 
 variable "is_scs" {
-  description = "Is this security group for an ABAP SCS instance; default: false."
+  description = "Is this security group for an ABAP SCS instance."
   type        = bool
   default     = false
 }
 
 
 variable "sap_router_sysnr" {
-  description = "System number of the SAP router used; Default: 3299."
+  description = "System number of the SAP router used."
   type        = string
   default     = "3299"
 }

@@ -16,17 +16,21 @@ output "instance_role_arn" {
 
 
 output "instance_security_group_name" {
-  value = aws_security_group.default.arn
+  description = "The name of the security group created for the server."
+  value       = aws_security_group.default.name
 }
 
 output "instance_security_group_id" {
-  value = aws_security_group.default.arn
+  description = "The id of the security group created for the server."
+  value       = aws_security_group.default.id
 }
 
 output "instance_security_group_arn" {
-  value = aws_security_group.default.arn
+  description = "The arn of the security group created for the server."
+  value       = aws_security_group.default.arn
 }
 
 output "swap_device" {
-  value = aws_volume_attachment.swap.device_name
+  description = "The provisioned swap device name."
+  value       = aws_volume_attachment.swap.device_name
 }
