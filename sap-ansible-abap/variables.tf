@@ -36,17 +36,21 @@ variable "swap_device" {
 }
 
 variable "volume_groups" {
-  description = "List of devices and volume groups to be created."
-  type = list(object({
-    name    = string
-    devices = list(string)
-    logical_volumes = list(object({
-      name   = string
-      size   = string
-      mount  = string
-      fstype = string
-    }))
-  }))
+  description = "Volume groups, logical volumes, files system types, sizes and mount points."
+  type = list(
+    object({
+      name    = string
+      devices = list(string)
+      logical_volumes = list(
+        object({
+          name   = string
+          size   = string
+          mount  = string
+          fstype = string
+        })
+      )
+    })
+  )
 }
 
 variable "block_devices" {
@@ -54,28 +58,30 @@ variable "block_devices" {
     A list of block devices that will be as a simple block device.
     Example Format:  
     [
-     {
-       name : "Software",
-       device : "/dev/sdg",
-       size : "100%FREE",
-       mount : "/sybase/DAC/archive_logs",
-       fstype : "xfs"
-     },
+      {
+        name : "Software",
+        device : "/dev/sdg",
+        size : "100%FREE",
+        mount : "/sybase/DAC/archive_logs",
+        fstype : "xfs"
+      },
     ]
   HEREDOC
 
-  type = list(object({
-    name   = string
-    device = string
-    size   = string
-    mount  = string
-    fstype = string
-  }))
+  type = list(
+    object({
+      name   = string
+      device = string
+      size   = string
+      mount  = string
+      fstype = string
+    })
+  )
   default = null
 }
 
 variable "saptrans_efs" {
-  description = ""
+  description = "SAP Transport EFS details."
   type = map(
     object({
       filesystem_id   = string
