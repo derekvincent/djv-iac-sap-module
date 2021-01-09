@@ -19,7 +19,8 @@ locals {
     volume_groups : local.volume_groups
     block_devices : local.block_devices
     saptrans : var.saptrans_efs
-
+    region : var.region
+    shared_s3_role_arn : var.shared_s3_role_arn
   }
 
   template = templatefile("${path.module}/templates/${local.template_name}", local.template_input)
