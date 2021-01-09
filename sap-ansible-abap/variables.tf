@@ -127,3 +127,13 @@ variable "saptrans_efs" {
   )
   default = null
 }
+
+variable "region" {
+  description = "The AWS region."
+  type        = string
+}
+
+variable "shared_s3_role_arn" {
+  description = "The role arn that is used to acccess central s3 buckets in shared service account."
+  type        = string
+}
