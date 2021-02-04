@@ -5,7 +5,7 @@ locals {
   template_type = var.json_format ? "json" : "yaml"
   # template_name = concat(".", [concat("-", ["sap-abp", local.template_type]), "tpl"])
 
-  ## Dirty dirty... conver to yaml (string) do a replace on the [SID] variable and 
+  ## Dirty dirty... convert to yaml (string) do a replace on the [SID] variable and 
   ## convert it back from yaml as a TF object. 
   volume_groups = yamldecode(replace(yamlencode(var.volume_groups), "[SID]", var.sid))
   block_devices = yamldecode(replace(yamlencode(var.block_devices), "[SID]", var.sid))
@@ -21,6 +21,7 @@ locals {
     saptrans : var.saptrans_efs
     region : var.region
     shared_s3_role_arn : var.shared_s3_role_arn
+    sap_app_type : var.sap_app_type
   }
 
   template = templatefile("${path.module}/templates/${local.template_name}", local.template_input)

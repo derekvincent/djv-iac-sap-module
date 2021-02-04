@@ -137,3 +137,9 @@ variable "shared_s3_role_arn" {
   description = "The role arn that is used to acccess central s3 buckets in shared service account."
   type        = string
 }
+
+variable "sap_app_type" {
+  description = "The application type being deployed. Used to control some installation specifics."
+  type        = string
+  default     = ""
+}
