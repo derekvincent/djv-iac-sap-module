@@ -143,3 +143,9 @@ variable "sap_app_type" {
   type        = string
   default     = ""
 }
+
+variable "hugepages_size" {
+  description = "If using hugepages for the DB set the size to be used."
+  type        = number
+  default     = 0
+}

@@ -22,6 +22,7 @@ locals {
     region : var.region
     shared_s3_role_arn : var.shared_s3_role_arn
     sap_app_type : var.sap_app_type
+    hugepages_size : var.hugepages_size
   }
 
   template = templatefile("${path.module}/templates/${local.template_name}", local.template_input)

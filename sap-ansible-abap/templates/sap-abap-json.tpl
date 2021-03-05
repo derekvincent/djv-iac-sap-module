@@ -12,6 +12,7 @@ ${
     "region": "${region}"
     "shared_s3_role_arn": "${shared_s3_role_arn}"
     "sap_app_type": "${sap_app_type}"
+    "hugepages_size" : "${hugepages_size}"
     }
   )
 }
