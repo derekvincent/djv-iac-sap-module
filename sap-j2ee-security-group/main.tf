@@ -88,7 +88,7 @@ locals {
   security_group_ingress_rules = concat(local.sap_base_ports, local.sap_control,
   local.sap_scs_ms, local.sap_router, var.additional_ingress_rules)
 
-  security_group_egress_rules = concat(local.sap_router, local.sap_base_ports, var.additional_egress_rules)
+  security_group_egress_rules = concat(local.sap_base_ports, local.sap_router, var.additional_egress_rules)
 }
 
 
