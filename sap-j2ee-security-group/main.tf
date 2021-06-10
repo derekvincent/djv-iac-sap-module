@@ -120,11 +120,11 @@ resource "aws_security_group_rule" "ingress" {
 resource "aws_security_group_rule" "egress" {
   count             = length(local.security_group_egress_rules)
   type              = "egress"
-  from_port         = lookup(local.security_group_ingress_rules[count.index], "from_port")
-  to_port           = lookup(local.security_group_ingress_rules[count.index], "to_port")
-  protocol          = lookup(local.security_group_ingress_rules[count.index], "protocol")
-  cidr_blocks       = lookup(local.security_group_ingress_rules[count.index], "cidr_blocks", null)
-  prefix_list_ids   = lookup(local.security_group_ingress_rules[count.index], "prefix_ids", null)
-  description       = lookup(local.security_group_ingress_rules[count.index], "description", "")
+  from_port         = lookup(local.security_group_egress_rules[count.index], "from_port")
+  to_port           = lookup(local.security_group_egress_rules[count.index], "to_port")
+  protocol          = lookup(local.security_group_egress_rules[count.index], "protocol")
+  cidr_blocks       = lookup(local.security_group_egress_rules[count.index], "cidr_blocks", null)
+  prefix_list_ids   = lookup(local.security_group_egress_rules[count.index], "prefix_ids", null)
+  description       = lookup(local.security_group_egress_rules[count.index], "description", "")
   security_group_id = aws_security_group.default.id
 }
