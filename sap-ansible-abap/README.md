@@ -6,6 +6,7 @@ This module is used to generate the variable file that is used to in the ansible
 - Block Device disk layout 
 - Swap 
 - SAP Trans EFS mounting 
+- Hugepages sizes 
 
 ***NOTE: If `[SID]` (literal with square brackets) is passed in along with the `sid` variable on the `volume_groups` or `block_devices` a value subtitution will be done. ***
 

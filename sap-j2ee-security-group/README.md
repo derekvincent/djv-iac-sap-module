@@ -1,4 +1,4 @@
-# SAP Application Security Group Generator
+# SAP Application J2EE Security Group Generator
 
 This will generate a base security group for a CI, DI, and ASCS based SAP instaces. They group will be targeted based on the SAP system number input. Addtional ingress/egress rules are allowed to passed in. 
 
