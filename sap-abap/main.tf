@@ -1,7 +1,7 @@
 locals {
 
-  instance_name    = lower(join("-", [var.namespace, var.name, var.environment, var.sap_application, var.sap_sid]))
-  instance_sg_name = lower(join("-", [var.namespace, var.name, var.environment, var.sap_application, var.sap_sid, "sg"]))
+  instance_name     = lower(join("-", [var.namespace, var.name, var.environment, var.sap_application, var.sap_sid]))
+  instance_sg_name  = lower(join("-", [var.namespace, var.name, var.environment, var.sap_application, var.sap_sid, "sg"]))
   sap_dp_poicy_name = lower(join("-", [var.namespace, var.name, var.environment, "sap-data-provider-policy"]))
 
   swap_device = "/dev/sdw"
@@ -285,8 +285,8 @@ data "aws_iam_policy_document" "inline-policy-document-shared-roles" {
 
 ## Create and inline policy for supper of the AWS SAP Data Provider and attached it to the instance role.
 resource "aws_iam_role_policy" "inline-policy-sap-data-provider" {
-  name = local.sap_dp_poicy_name
-  role = aws_iam_role.sap_abap.name
+  name   = local.sap_dp_poicy_name
+  role   = aws_iam_role.sap_abap.name
   policy = data.aws_iam_policy_document.inline-policy-document-sap-data-provider.json
 }
 
@@ -295,17 +295,17 @@ data "aws_iam_policy_document" "inline-policy-document-sap-data-provider" {
   statement {
     effect = "Allow"
     actions = [
-                "EC2:DescribeInstances",
-                "cloudwatch:GetMetricStatistics",
-                "EC2:DescribeVolumes"
+      "EC2:DescribeInstances",
+      "cloudwatch:GetMetricStatistics",
+      "EC2:DescribeVolumes"
     ]
 
     resources = ["*"]
   }
 
   statement {
-    effect = "Allow"
-    actions = ["s3:GetObject"]
+    effect    = "Allow"
+    actions   = ["s3:GetObject"]
     resources = ["arn:aws:s3:::aws-sap-data-provider/config.properties"]
   }
 }
