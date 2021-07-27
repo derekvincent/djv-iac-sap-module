@@ -118,6 +118,7 @@ resource "aws_security_group_rule" "ingress" {
 ##
 
 resource "aws_instance" "sap-abap" {
+  #tfsec:ignore:AWS079
   ami                         = var.ec2_ami
   instance_type               = var.ec2_instance_type
   iam_instance_profile        = aws_iam_instance_profile.sap_abap.name
