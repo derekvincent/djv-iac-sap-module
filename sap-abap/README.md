@@ -7,13 +7,13 @@ Provisions an SAP EC2 instance based on a targeted single ABAP instance (ASCS/DI
 - Creation of instance security group 
 - Attached general CI/ASCS security group that are provided
 - EC2 Instance
-- Defined EBS volumes with associsation to the above instance
+- Defined EBS volumes with association to the above instance
 - IAM Role for the instance that includes the following policies:
   - AmazonSSMManagedInstanceCore (Amazon)
   - CloudWatchAgentServerPolicy (Amazon)
   - AmazonElasticFileSystemsUtils (Amazon)
   - EFS Access to the provided EFS filesystem and Access Points
-  - Parovided Shared Service assume for accessing additional resources such S3 buckets in local or cross-account
+  - Provided Shared Service assume for accessing additional resources such S3 buckets in local or cross-account
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
